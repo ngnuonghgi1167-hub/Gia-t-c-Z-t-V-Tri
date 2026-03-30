@@ -25,6 +25,17 @@
   .logo {
     font-size: 24px;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
   }
 
   nav a {
@@ -39,6 +50,53 @@
     padding: 5px 10px;
     border-radius: 5px;
     font-weight: bold;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .cart-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 280px;
+    max-height: 350px;
+    overflow-y: auto;
+    background: #1c1c1c;
+    color: #ffffff;
+    border: 1px solid #444444;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: none;
+    z-index: 1000;
+  }
+
+  .cart-dropdown.active {
+    display: block;
+  }
+
+  .cart-dropdown h3 {
+    margin: 10px;
+    font-size: 16px;
+    border-bottom: 1px solid #000000;
+    padding-bottom: 5px;
+  }
+
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border-bottom: 1px solid #000000;
+  }
+
+  .cart-item:last-child {
+    border-bottom: none;
+  }
+
+  .cart-footer {
+    padding: 10px;
+    font-weight: bold;
+    text-align: right;
   }
 
   /* BANNER */
@@ -48,7 +106,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: rgb(0, 0, 0);
     font-size: 30px;
     font-weight: bold;
   }
@@ -102,13 +160,21 @@
   
 
 <header>
-  <div class="logo">🛍️ Shop nhà zịtvotri</div>
+  <div class="logo">
+    <img src="Hinh-anh-avatar-chu-vit-vang-ngo-nghinh-vo-tri-3.jpg" alt="Avatar Shop">
+    <span>🛍️ Shop nhà zịtvotri</span>
+  </div>
   <nav>
     <a href="#">Trang chủ</a>
     <a href="#">Sản phẩm</a>
     <a href="#">Liên hệ 0704931908</a>
   </nav>
-  <div class="cart">🛒 <span id="cart-count">0</span></div>
+  <div class="cart" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
+  <div id="cart-dropdown" class="cart-dropdown" onclick="event.stopPropagation()">
+    <h3>Giỏ hàng</h3>
+    <div id="cart-items"><p style="padding:10px; margin:0;">Không có sản phẩm nào.</p></div>
+    <div class="cart-footer">Tổng: <span id="cart-total">0</span>đ</div>
+  </div>
 </header>
 
 <div class="banner">
@@ -118,35 +184,59 @@
 <section class="products">
 
   <div class="product">
-    <img src="siêu xem.jpg">
-    width: 15px;
-    height: 20px;
+    <img src="siêu xem.jpg" alt="XE MÔ HÌNH BMW K1300S 1:10 WELLY (TRẮNG)">
     <h3>XE MÔ HÌNH BMW K1300S 1:10 WELLY (TRẮNG)</h3>
     <p>6.900.000đ</p>
-    <button onclick="addToCart()">Thêm vào giỏ</button>
+    <button onclick="addToCart('XE MÔ HÌNH BMW K1300S 1:10 WELLY (TRẮNG)', 6900000)">Thêm vào giỏ</button>
   </div>
 
   <div class="product">
-    <img src="xem cam.jpg">
+    <img src="xem cam.jpg" alt="Xe Mô Hình Koenigsegg Agera Rs 1:18 AUTOart ( Cam )">
     <h3>Xe Mô Hình Koenigsegg Agera Rs 1:18 AUTOart ( Cam )</h3>
     <p>7.200.000đ</p>
-    <button onclick="addToCart()">Thêm vào giỏ</button>
+    <button onclick="addToCart('Xe Mô Hình Koenigsegg Agera Rs 1:18 AUTOart ( Cam )', 7200000)">Thêm vào giỏ</button>
   </div>
 
   <div class="product">
-    <img src="siêu xanh.jpg">
-    <h3>Xe Mô Hình Pagani Zonda Cinque Coupe 1/18 Almost Real (Xanh Lá)
-</h3>
+    <img src="siêu xanh.jpg" alt="Xe Mô Hình Pagani Zonda Cinque Coupe 1/18 Almost Real (Xanh Lá)">
+    <h3>Xe Mô Hình Pagani Zonda Cinque Coupe 1/18 Almost Real (Xanh Lá)</h3>
     <p>3.680.000đ</p>
-    <button onclick="addToCart()">Thêm vào giỏ</button>
+    <button onclick="addToCart('Xe Mô Hình Pagani Zonda Cinque Coupe 1/18 Almost Real (Xanh Lá)', 3680000)">Thêm vào giỏ</button>
   </div>
 
   <div class="product">
-    <img src="bò xám.jpg">
-    <h3>XE MÔ HÌNH LAMBORGHINI REVENTON BỘ KIT 1:18 BBURAGO (XÁM)
-</h3>
+    <img src="bò xám.jpg" alt="XE MÔ HÌNH LAMBORGHINI REVENTON BỘ KIT 1:18 BBURAGO (XÁM)">
+    <h3>XE MÔ HÌNH LAMBORGHINI REVENTON BỘ KIT 1:18 BBURAGO (XÁM)</h3>
     <p>700.000.000.000đ</p>
-    <button onclick="addToCart()">Thêm vào giỏ</button>
+    <button onclick="addToCart('XE MÔ HÌNH LAMBORGHINI REVENTON BỘ KIT 1:18 BBURAGO (XÁM)', 700000000000)">Thêm vào giỏ</button>
+  </div>
+
+  <div class="product">
+    <img src="OIP.jpg" alt="Xe Mô Hình Ferrari F8 Tributo">
+    <h3>xe bò siêu cấp vũ trụ</h3>
+    <p>8.000.000.000đ</p>
+    <button onclick="addToCart('Xe Mô Hình Ferrari F8 Tributo', 8000000)">Thêm vào giỏ</button>
+  </div>
+
+  <div class="product">
+    <img src="https://via.placeholder.com/300x150.png?text=San+pham+6" alt="Xe Mô Hình Porsche 911 GT3 RS">
+    <h3>Xe Mô Hình Porsche 911 GT3 RS</h3>
+    <p>4.750.000đ</p>
+    <button onclick="addToCart('Xe Mô Hình Porsche 911 GT3 RS', 4750000)">Thêm vào giỏ</button>
+  </div>
+
+  <div class="product">
+    <img src="https://via.placeholder.com/300x150.png?text=San+pham+7" alt="Xe Mô Hình Nissan GT-R R35">
+    <h3>Xe Mô Hình Nissan GT-R R35</h3>
+    <p>3.980.000đ</p>
+    <button onclick="addToCart('Xe Mô Hình Nissan GT-R R35', 3980000)">Thêm vào giỏ</button>
+  </div>
+
+  <div class="product">
+    <img src="https://via.placeholder.com/300x150.png?text=San+pham+8" alt="Xe Mô Hình McLaren 720S">
+    <h3>Xe Mô Hình McLaren 720S</h3>
+    <p>6.250.000đ</p>
+    <button onclick="addToCart('Xe Mô Hình McLaren 720S', 6250000)">Thêm vào giỏ</button>
   </div>
 
 </section>
@@ -156,12 +246,72 @@
 </footer>
 
 <script>
-  let count = 0;
+  let cart = [];
 
-  function addToCart() {
-    count++;
-    document.getElementById("cart-count").innerText = count;
+  function formatCurrency(value) {
+    return value.toLocaleString('vi-VN') + ' đ';
   }
+
+  function updateCartUI() {
+    const countEl = document.getElementById('cart-count');
+    const cartItemsEl = document.getElementById('cart-items');
+    const totalEl = document.getElementById('cart-total');
+
+    let total = 0;
+    if (cart.length === 0) {
+      cartItemsEl.innerHTML = '<p style="padding:10px; margin:0; color:#ffd700;">Không có sản phẩm nào.</p>';
+    } else {
+      cartItemsEl.innerHTML = cart.map(item => {
+        total += item.price * item.quantity;
+        return `<div class="cart-item"><span>${item.name} x ${item.quantity}</span><span>${formatCurrency(item.price * item.quantity)}</span></div>`;
+      }).join('');
+    }
+
+    countEl.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
+    totalEl.innerText = formatCurrency(total);
+    saveCartToStorage();
+  }
+
+  function saveCartToStorage() {
+    localStorage.setItem('cartData', JSON.stringify(cart));
+  }
+
+  function loadCartFromStorage() {
+    const saved = localStorage.getItem('cartData');
+    if (saved) {
+      try {
+        cart = JSON.parse(saved);
+      } catch (e) {
+        cart = [];
+      }
+    }
+    updateCartUI();
+  }
+
+  function addToCart(name, price) {
+    const index = cart.findIndex(item => item.name === name);
+    if (index >= 0) {
+      cart[index].quantity += 1;
+    } else {
+      cart.push({ name, price, quantity: 1 });
+    }
+    updateCartUI();
+  }
+
+  function toggleCart() {
+    const dropdown = document.getElementById('cart-dropdown');
+    dropdown.classList.toggle('active');
+  }
+
+  document.addEventListener('click', function (event) {
+    const dropdown = document.getElementById('cart-dropdown');
+    const cartButton = document.querySelector('.cart');
+    if (!cartButton.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.classList.remove('active');
+    }
+  });
+
+  loadCartFromStorage();
 </script>
 
 </body>
